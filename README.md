@@ -19,7 +19,7 @@ PS C:\users\jsmrc\documents\git\cactpot> dotnet run
 
 The tool will pop up a WPF window. Each button represents one of the scratch ticket slots in-game, which when clicked will allow you to select the value at that location. To start the game, click the slot which is revealed on your in-game cactpot card and give it a value.
 
-![initial state](https://github.com/jsmrcina/cactpot/blob/main/readme-images/initialstate.png?raw=true)
+![initial state](https://github.com/jsmrcina/cactpot/blob/main/readme-images/initial_state.png?raw=true)
 
 The board will then turn one or more slots bronze, which are the recommended slots to reveal for your next turn:
 
