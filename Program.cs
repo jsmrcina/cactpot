@@ -61,7 +61,7 @@ namespace cactpot
             List<int> uncoveredSlots = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
             for (int x = 0; x < 9; x++)
-        {
+            {
                 if (points[x] == 0)
                 {
                     uncoveredSlots.Remove(x);
@@ -99,7 +99,7 @@ namespace cactpot
         */
         public static string ConvertWinningIdToString(int winningId)
         {
-            switch(winningId)
+            switch (winningId)
             {
                 case 0: return "First Row";
                 case 1: return "Second Row";
@@ -119,16 +119,16 @@ namespace cactpot
         */
         public int EvaluateScoreByWinningId(int id)
         {
-            switch(id)
+            switch (id)
             {
-            case 0: return scoreToPayout.GetValueOrDefault(points[0] + points[1] + points[2], 0);
-            case 1: return scoreToPayout.GetValueOrDefault(points[3] + points[4] + points[5], 0);
-            case 2: return scoreToPayout.GetValueOrDefault(points[6] + points[7] + points[8], 0);
-            case 3: return scoreToPayout.GetValueOrDefault(points[0] + points[3] + points[6], 0);
-            case 4: return scoreToPayout.GetValueOrDefault(points[1] + points[4] + points[7], 0);
-            case 5: return scoreToPayout.GetValueOrDefault(points[2] + points[5] + points[8], 0);
-            case 6: return scoreToPayout.GetValueOrDefault(points[0] + points[4] + points[8], 0);
-            case 7: return scoreToPayout.GetValueOrDefault(points[2] + points[4] + points[6], 0);
+                case 0: return scoreToPayout.GetValueOrDefault(points[0] + points[1] + points[2], 0);
+                case 1: return scoreToPayout.GetValueOrDefault(points[3] + points[4] + points[5], 0);
+                case 2: return scoreToPayout.GetValueOrDefault(points[6] + points[7] + points[8], 0);
+                case 3: return scoreToPayout.GetValueOrDefault(points[0] + points[3] + points[6], 0);
+                case 4: return scoreToPayout.GetValueOrDefault(points[1] + points[4] + points[7], 0);
+                case 5: return scoreToPayout.GetValueOrDefault(points[2] + points[5] + points[8], 0);
+                case 6: return scoreToPayout.GetValueOrDefault(points[0] + points[4] + points[8], 0);
+                case 7: return scoreToPayout.GetValueOrDefault(points[2] + points[4] + points[6], 0);
             }
 
             throw new InvalidOperationException();
@@ -173,9 +173,9 @@ namespace cactpot
         */
         public bool IsReachable(BoardRepresentation other)
         {
-            for(int x = 0; x < 9; x++)
+            for (int x = 0; x < 9; x++)
             {
-                if(other.points[x] != 0 &&
+                if (other.points[x] != 0 &&
                     other.points[x] != points[x])
                 {
                     return false;
@@ -217,18 +217,18 @@ namespace cactpot
         */
         static void PermuteBoards(byte[] values, int size, int n, List<BoardRepresentation> storage)
         {
-            if(size == 1)
+            if (size == 1)
             {
                 BoardRepresentation board = new BoardRepresentation(values);
                 storage.Add(board);
             }
 
-            for(byte i = 0; i < size; i++)
+            for (byte i = 0; i < size; i++)
             {
                 PermuteBoards(values, size - 1, n, storage);
 
                 byte swapIndex = i;
-                if(size % 2 == 1)
+                if (size % 2 == 1)
                 {
                     swapIndex = 0;
                 }
@@ -248,9 +248,9 @@ namespace cactpot
             int[] averageScoreByWinningId = new int[8];
             int sum = 0;
 
-            for(int winningId = 0; winningId < 8; winningId++)
+            for (int winningId = 0; winningId < 8; winningId++)
             {
-                foreach(var board in boards)
+                foreach (var board in boards)
                 {
                     sum += board.EvaluateScoreByWinningId(winningId);
                 }
@@ -272,8 +272,6 @@ namespace cactpot
          */
         static int[] CalculateScoreImpactByCell(int[] averageScoreByWinningId)
         {
-
-
             int[] sumOfAverageScoreByWinningIdPerCell = new int[9];
 
             // Cell 0 (row0, col0, top left diagonal)
@@ -313,9 +311,9 @@ namespace cactpot
         static int[] FindAllIndexOf(int[] arr, int value)
         {            
             List<int> indexes = new List<int>();
-            for(int x = 0; x < arr.Length; x++)
+            for (int x = 0; x < arr.Length; x++)
             {
-                if(arr[x] == value)
+                if (arr[x] == value)
                 {
                     indexes.Add(x);
                 }
@@ -345,7 +343,7 @@ namespace cactpot
                 int[] sumOfAverageScoreByWinningIdPerCell = CalculateScoreImpactByCell(averageScoreByWinningId);
 
                 // Zero out any cells that are already uncovered
-                foreach(var cellId in playBoard.UncoveredSlots())
+                foreach (var cellId in playBoard.UncoveredSlots())
                 {
                     sumOfAverageScoreByWinningIdPerCell[cellId] = 0;
                 }
@@ -369,7 +367,7 @@ namespace cactpot
                 int[] winningIdsToChoose = FindAllIndexOf(averageScoreByWinningId, maxAveragePayout);
                 Console.WriteLine("Choose one of these to get the best outcome: ");
 
-                foreach(var winningId in winningIdsToChoose)
+                foreach (var winningId in winningIdsToChoose)
                 {
                     Console.WriteLine(BoardRepresentation.ConvertWinningIdToString(winningId));
                 }
@@ -407,7 +405,7 @@ namespace cactpot
                 // Find the remaining boards
                 boards.RemoveAll(item => !item.IsReachable(playBoard));
 
-                if(stage != 2)
+                if (stage != 2)
                 {
                     // Figure out which cells we should uncover next
                     maxScore = boards.Max(item => item.EvaluateBestScoreAvailable());
