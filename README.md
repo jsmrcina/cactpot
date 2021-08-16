@@ -9,13 +9,17 @@ The project attempts to solve two different problems:
 1) Which slot should you uncover next to maximize your chances to maximize your MGP gain.
 2) Which line should you select based on what you can see to maximize your MGP gain.
 
-## How to use
+## Launching
 
-Launch using [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/).
+Launch using [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/)
 
 ```
 PS C:\users\jsmrc\documents\git\cactpot> dotnet run
 ```
+
+Alternatively, you can download the [binary release](https://github.com/jsmrcina/cactpot/releases) and run from there.
+
+## Usage Walkthrough
 
 The tool will pop up a WPF window. Each button represents one of the scratch ticket slots in-game, which when clicked will allow you to select the value at that location. To start the game, click the slot which is revealed on your in-game cactpot card and give it a value.
 
