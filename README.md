@@ -1,6 +1,6 @@
 # Mini Cactpot Solver
 
-This project is a simple .NET Core command line tool for helping maximize MGP gained from the Mini Cactpot game in FFXIV.
+This project is a simple .NET 5 WPF tool for helping maximize MGP gained from the Mini Cactpot game in FFXIV.
 
 You can read about the Cactpot games [here](https://na.finalfantasyxiv.com/lodestone/playguide/contentsguide/goldsaucer/cactpot/).
 
@@ -9,75 +9,24 @@ The project attempts to solve two different problems:
 1) Which slot should you uncover next to maximize your chances to maximize your MGP gain.
 2) Which line should you select based on what you can see to maximize your MGP gain.
 
-## Slot layout
-
-When asking for a slot, the tool is asking for a number between [0, 8] which corresponds to the following locations on the Cactpot board:
-
-```
-0 1 2
-3 4 5
-6 7 8
-```
-
 ## How to use
 
-Launch using .NET Core tools:
+Launch using [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/).
 
 ```
 PS C:\users\jsmrc\documents\git\cactpot> dotnet run
 ```
 
-Then simply follow the prompts. First, you need to enter the slot that is visible on the cactpot board when starting and then the number that is shown. After each move, the tool will show you the current board and recommend a slot to uncover:
+The tool will pop up a WPF window. Each button represents one of the scratch ticket slots in-game, which when clicked will allow you to select the value at that location. To start the game, click the slot which is revealed on your in-game cactpot card and give it a value.
 
-```
-PS C:\users\jsmrc\documents\git\cactpot> dotnet run
-Enter initial slot that is shown: 0
-Enter initial value that is shown: 2
-Value: 0
-2 0 0
-0 0 0
-0 0 0
+![initial state](https://github.com/jsmrcina/cactpot/blob/main/readme-images/initialstate.png?raw=true)
 
-Choose one of these cells next: 4
-```
+The board will then turn one or more slots bronze, which are the recommended slots to reveal for your next turn:
 
-Next, you'll simply make the three moves you want to make (either using the suggestions or not) and lastly the game will recommend a line to pick. Below is a sample of the whole tool running:
+![turn 1](https://github.com/jsmrcina/cactpot/blob/main/readme-images/turn_1.png?raw=true)
 
-```
-PS C:\users\jsmrc\documents\git\cactpot> dotnet run
-Enter initial slot that is shown: 0
-Enter initial value that is shown: 2
-Value: 0
-2 0 0
-0 0 0
-0 0 0
+Repeat this until the game is finished and the solver recommends a row/column/diagonal to use to maximize your MGP winnings:
 
-Choose one of these cells next: 4
-Select slot to uncover: 4
-Enter uncovered value: 3
-Value: 0
-2 0 0
-0 3 0
-0 0 0
-
-Choose one of these cells next: 8
-Select slot to uncover: 8
-Enter uncovered value: 9
-Value: 360
-2 0 0
-0 3 0
-0 0 9
-
-Choose one of these cells next: 2, 6
-Select slot to uncover: 2
-Enter uncovered value: 6
-Value: 720
-2 0 6
-0 3 0
-0 0 9
-
-Choose one of these to get the best outcome:
-Third Row
-```
+![game over](https://github.com/jsmrcina/cactpot/blob/main/readme-images/gameover.png?raw=true)
 
 Enjoy!
