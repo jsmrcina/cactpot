@@ -1,8 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>cactpot_gui</RootNamespace>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Resource Include="graphics/edgy-16x16-arrow_down_right.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_down_left.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_right.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_down.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_down_right_r.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_down_left_r.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_right_r.png" />
+    <Resource Include="graphics/edgy-16x16-arrow_down_r.png" />
+    <Resource Include="graphics/coin_7.png" />
+    <Resource Include="graphics/coin_8.png" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+  </ItemGroup>
 
 </Project>
