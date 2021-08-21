@@ -20,7 +20,9 @@ namespace cactpot_gui
     /// </summary>
     public partial class MainWindow : Window
     {
-        Dictionary<int, Tuple<Button, Uri>> _winningIdToInfo;
+        HashSet<MenuItem> _hiddenMenuItems;
+
+        Dictionary<int, Tuple<Button, Uri, Uri>> _winningIdToInfo;
 
         Dictionary<int, Button> _slotIdToButton;
 
@@ -29,21 +31,23 @@ namespace cactpot_gui
         // This will represent our play board that we uncover numbers on    
         BoardRepresentation _playBoard = new BoardRepresentation();
 
-        int stage = 0;
+        int _stage = 0;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _winningIdToInfo = new Dictionary<int, Tuple<Button, Uri>> {
-                { 0, new Tuple<Button, Uri>(btn_right_1, new Uri(@"graphics/edgy-16x16-arrow_right_r.png", UriKind.Relative)) },
-                { 1, new Tuple<Button, Uri>(btn_right_2, new Uri(@"graphics/edgy-16x16-arrow_right_r.png", UriKind.Relative)) },
-                { 2, new Tuple<Button, Uri>(btn_right_3, new Uri(@"graphics/edgy-16x16-arrow_right_r.png", UriKind.Relative)) },
-                { 3, new Tuple<Button, Uri>(btn_down_1, new Uri(@"graphics/edgy-16x16-arrow_down_r.png", UriKind.Relative)) },
-                { 4, new Tuple<Button, Uri>(btn_down_2, new Uri(@"graphics/edgy-16x16-arrow_down_r.png", UriKind.Relative)) },
-                { 5, new Tuple<Button, Uri>(btn_down_3, new Uri(@"graphics/edgy-16x16-arrow_down_r.png", UriKind.Relative)) },
-                { 6, new Tuple<Button, Uri>(btn_down_right, new Uri(@"graphics/edgy-16x16-arrow_down_right_r.png", UriKind.Relative)) },
-                { 7, new Tuple<Button, Uri>(btn_down_left, new Uri(@"graphics/edgy-16x16-arrow_down_left_r.png", UriKind.Relative)) }
+            _hiddenMenuItems = new HashSet<MenuItem>();
+
+            _winningIdToInfo = new Dictionary<int, Tuple<Button, Uri, Uri>> {
+                { 0, new Tuple<Button, Uri, Uri>(btn_right_1, new Uri(@"graphics/edgy-16x16-arrow_right.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_right_r.png", UriKind.Relative)) },
+                { 1, new Tuple<Button, Uri, Uri>(btn_right_2, new Uri(@"graphics/edgy-16x16-arrow_right.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_right_r.png", UriKind.Relative)) },
+                { 2, new Tuple<Button, Uri, Uri>(btn_right_3, new Uri(@"graphics/edgy-16x16-arrow_right.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_right_r.png", UriKind.Relative)) },
+                { 3, new Tuple<Button, Uri, Uri>(btn_down_1, new Uri(@"graphics/edgy-16x16-arrow_down.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_down_r.png", UriKind.Relative)) },
+                { 4, new Tuple<Button, Uri, Uri>(btn_down_2, new Uri(@"graphics/edgy-16x16-arrow_down.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_down_r.png", UriKind.Relative)) },
+                { 5, new Tuple<Button, Uri, Uri>(btn_down_3, new Uri(@"graphics/edgy-16x16-arrow_down.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_down_r.png", UriKind.Relative)) },
+                { 6, new Tuple<Button, Uri, Uri>(btn_down_right, new Uri(@"graphics/edgy-16x16-arrow_down_right.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_down_right_r.png", UriKind.Relative)) },
+                { 7, new Tuple<Button, Uri, Uri>(btn_down_left, new Uri(@"graphics/edgy-16x16-arrow_down_left.png", UriKind.Relative), new Uri(@"graphics/edgy-16x16-arrow_down_left_r.png", UriKind.Relative)) }
             };
 
             _slotIdToButton = new Dictionary<int, Button> {
@@ -68,15 +72,14 @@ namespace cactpot_gui
                 // Update UI
                 MenuItem mi = sender as MenuItem;
                 ContextMenu menu = mi.Parent as ContextMenu;
-                Button owningButton = menu.PlacementTarget as Button;
                 string header = mi.Header.ToString();
-                Grid contentGrid = owningButton.Content as Grid;
-                TextBlock text = contentGrid.Children[1] as TextBlock;
-                text.Text = header;
+                Button owningButton = menu.PlacementTarget as Button;
+                SetButtonText(owningButton, header);
                 byte value = byte.Parse(header);
 
                 // Remove item from context menu
                 mi.Visibility = Visibility.Collapsed;
+                _hiddenMenuItems.Add(mi);
 
                 // Update model
                 int slot = int.Parse(owningButton.Tag.ToString());
@@ -90,6 +93,55 @@ namespace cactpot_gui
             {
                 MessageBox.Show("A handled exception just occurred: " + ex.StackTrace, "Exception Sample", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void mnuReset_Click(object sender, RoutedEventArgs eventArgs)
+        {
+            // Reset UI
+            foreach (MenuItem mi in _hiddenMenuItems)
+            {
+                mi.Visibility = Visibility.Visible;
+            }
+
+            // Reset coin colors
+            foreach (var tuple in _slotIdToButton)
+            {
+                tuple.Value.IsEnabled = true;
+                tuple.Value.Tag = tuple.Key.ToString();
+                SetButtonText(tuple.Value, "?");
+                SetColorToGray(tuple.Value);
+            }
+
+            // Reset arrow colors
+            foreach (var pair in _winningIdToInfo)
+            {
+                var tuple = pair.Value;
+                Image buttonImage = tuple.Item1.Content as Image;
+                buttonImage.Source = new BitmapImage(tuple.Item2);
+            }
+
+            InitializeGame();
+        }
+
+        private void SetButtonText(Button b, string toSet)
+        {
+            Grid contentGrid = b.Content as Grid;
+            TextBlock text = contentGrid.Children[1] as TextBlock;
+            text.Text = toSet;
+        }
+
+        private void SetColorToGray(Button b)
+        {
+            Grid buttonGrid = b.Content as Grid;
+            Image buttonImage = buttonGrid.Children[0] as Image;
+            buttonImage.Source = new BitmapImage(new Uri(@"graphics/coin_7.png", UriKind.Relative));
+        }
+
+        private void SetColorToGold(Button b)
+        {
+            Grid buttonGrid = b.Content as Grid;
+            Image buttonImage = buttonGrid.Children[0] as Image;
+            buttonImage.Source = new BitmapImage(new Uri(@"graphics/coin_8.png", UriKind.Relative));
         }
 
         /*
@@ -223,20 +275,16 @@ namespace cactpot_gui
             int maxImpact = sumOfAverageScoreByWinningIdPerCell.Max();
             int[] cellsToChooseNext = FindAllIndexOf(sumOfAverageScoreByWinningIdPerCell, maxImpact);
 
-            // Reset all coin buttons to yellow
+            // Reset all coin buttons to gray
             foreach (var tuple in _slotIdToButton)
             {
-                Grid buttonGrid = tuple.Value.Content as Grid;
-                Image buttonImage = buttonGrid.Children[0] as Image;
-                buttonImage.Source = new BitmapImage(new Uri(@"graphics/coin_7.png", UriKind.Relative));
+                SetColorToGray(tuple.Value);
             }
 
-            // Mark suggested moves as red coins
+            // Mark suggested moves as yellow coins
             foreach (var item in cellsToChooseNext)
             {
-                Grid buttonGrid = _slotIdToButton[item].Content as Grid;
-                Image buttonImage = buttonGrid.Children[0] as Image;
-                buttonImage.Source = new BitmapImage(new Uri(@"graphics/coin_8.png", UriKind.Relative));
+                SetColorToGold(_slotIdToButton[item]);
             }
         }
 
@@ -253,19 +301,17 @@ namespace cactpot_gui
             int maxAveragePayout = averageScoreByWinningId.Max();
             int[] winningIdsToChoose = FindAllIndexOf(averageScoreByWinningId, maxAveragePayout);
 
-            // Reset button color to yellow
+            // Reset button color to gray
             foreach (var tuple in _slotIdToButton)
             {
-                Grid buttonGrid = tuple.Value.Content as Grid;
-                Image buttonImage = buttonGrid.Children[0] as Image;
-                buttonImage.Source = new BitmapImage(new Uri(@"graphics/coin_7.png", UriKind.Relative));
+                SetColorToGray(tuple.Value);
             }
 
             // Disable coin buttons
             foreach (var tuple in _slotIdToButton)
             {
                 tuple.Value.IsEnabled = false;
-                tuple.Value.Foreground = new SolidColorBrush(Color.FromRgb(0x31, 0x5F, 0x42));
+                tuple.Value.Tag = "Uncovered";
             }
 
             // For each winning solution, set the background image appropriately
@@ -273,13 +319,13 @@ namespace cactpot_gui
             {
                 var tuple = _winningIdToInfo[winningId];
                 Image buttonImage = tuple.Item1.Content as Image;
-                buttonImage.Source = new BitmapImage(tuple.Item2);
+                buttonImage.Source = new BitmapImage(tuple.Item3);
             }
         }
 
         void MakeMove(int slot, byte value)
         {
-            if (stage == 0)
+            if (_stage == 0)
             {
                 _playBoard.AssignValue(slot, value);
 
@@ -291,7 +337,7 @@ namespace cactpot_gui
                 List<BoardRepresentation> bestBoards = _boards.Where(item => item.EvaluateBestScoreAvailable() == maxScore).ToList<BoardRepresentation>();
                 DoCellSuggestion(bestBoards);
             }
-            else if (stage < 3)
+            else if (_stage < 3)
             {
                 _playBoard.AssignValue(slot, value);
                 Console.WriteLine(_playBoard.ToString());
@@ -315,11 +361,15 @@ namespace cactpot_gui
                 DoWinSuggestion();
             }
 
-            stage++;
+            _stage++;
         }
 
         void InitializeGame()
         {
+            _stage = 0;
+            _boards.Clear();
+            _playBoard = new BoardRepresentation();
+
             // Create every permutation of a 1-9 array, which represent all the final board states
             PermuteBoards(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 9, 9, _boards);
         }

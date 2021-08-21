@@ -40,7 +40,7 @@ namespace DropDownButtonExample
                     source.ContextMenu.IsOpen = true;
                     isContextMenuOpen = true;
                 }
-            }            
+            }
         }
 
         protected override void OnDetaching()

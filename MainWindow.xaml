@@ -46,152 +46,163 @@
                     <Setter Property="Foreground" Value="#15EDAA" />
                     <Setter Property="Background" Value="WhiteSmoke" />
                 </Trigger>
+                <Trigger Property="Control.Tag" Value="Uncovered">
+                    <Setter Property="Foreground" Value="#315F42" />
+                </Trigger>
             </Style.Triggers>
         </Style>
 
     </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Button Name="btn_down_right" Grid.Row="0" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_down_right.png" />
-        </Button>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Reset" Click="mnuReset_Click" />
+            </MenuItem>
+        </Menu>
 
-        <Button Name="btn_down_1" Grid.Row="0" Grid.Column="1" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_down.png" />
-        </Button>
-        <Button Name="btn_down_2" Grid.Row="0" Grid.Column="2" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_down.png" />
-        </Button>
-        <Button Name="btn_down_3" Grid.Row="0" Grid.Column="3" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_down.png" />
-        </Button>
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button Name="btn_down_right" Grid.Row="0" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_down_right.png" />
+            </Button>
 
-        <Button Name="btn_down_left" Grid.Row="0" Grid.Column="4" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_down_left.png" />
-        </Button>
+            <Button Name="btn_down_1" Grid.Row="0" Grid.Column="1" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_down.png" />
+            </Button>
+            <Button Name="btn_down_2" Grid.Row="0" Grid.Column="2" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_down.png" />
+            </Button>
+            <Button Name="btn_down_3" Grid.Row="0" Grid.Column="3" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_down.png" />
+            </Button>
 
-        <Button Name="btn_right_1" Grid.Row="1" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_right.png" />
-        </Button>
-        <Button Name="btn_id_0" Grid.Row="1" Grid.Column="1" Padding="0,0" Tag="0" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button Name="btn_id_1" Grid.Row="1" Grid.Column="2" Padding="0,0" Tag="1" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button Name="btn_id_2" Grid.Row="1" Grid.Column="3" Padding="0,0" Tag="2" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
+            <Button Name="btn_down_left" Grid.Row="0" Grid.Column="4" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_down_left.png" />
+            </Button>
 
-        <Button Name="btn_right_2" Grid.Row="2" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_right.png" />
-        </Button>
-        <Button Name="btn_id_3" Grid.Row="2" Grid.Column="1" Padding="0,0" Tag="3" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button Name="btn_id_4" Grid.Row="2" Grid.Column="2" Padding="0,0" Tag="4" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button Name="btn_id_5" Grid.Row="2" Grid.Column="3" Padding="0,0" Tag="5" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
+            <Button Name="btn_right_1" Grid.Row="1" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_right.png" />
+            </Button>
+            <Button Name="btn_id_0" Grid.Row="1" Grid.Column="1" Padding="0,0" Tag="0" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Name="btn_id_1" Grid.Row="1" Grid.Column="2" Padding="0,0" Tag="1" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Name="btn_id_2" Grid.Row="1" Grid.Column="3" Padding="0,0" Tag="2" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
 
-        <Button Name="btn_right_3" Grid.Row="3" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
-            <Image Source="graphics/edgy-16x16-arrow_right.png" />
-        </Button>
-        <Button Name="btn_id_6" Grid.Row="3" Grid.Column="1" Padding="0,0" Tag="6" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button Name="btn_id_7" Grid.Row="3" Grid.Column="2" Padding="0,0" Tag="7" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button Name="btn_id_8" Grid.Row="3" Grid.Column="3" Padding="0,0" Tag="8" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
-            <i:Interaction.Behaviors>
-                <ddb:DropDownButtonBehavior />
-            </i:Interaction.Behaviors>
-            <Button.Content>
-                <Grid>
-                    <Image Source="graphics/coin_7.png" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
-                </Grid>
-            </Button.Content>
-        </Button>
-    </Grid>
+            <Button Name="btn_right_2" Grid.Row="2" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_right.png" />
+            </Button>
+            <Button Name="btn_id_3" Grid.Row="2" Grid.Column="1" Padding="0,0" Tag="3" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Name="btn_id_4" Grid.Row="2" Grid.Column="2" Padding="0,0" Tag="4" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Name="btn_id_5" Grid.Row="2" Grid.Column="3" Padding="0,0" Tag="5" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+
+            <Button Name="btn_right_3" Grid.Row="3" Grid.Column="0" Padding="0,0" IsEnabled="false" Style="{StaticResource ButtonStyle}">
+                <Image Source="graphics/edgy-16x16-arrow_right.png" />
+            </Button>
+            <Button Name="btn_id_6" Grid.Row="3" Grid.Column="1" Padding="0,0" Tag="6" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Name="btn_id_7" Grid.Row="3" Grid.Column="2" Padding="0,0" Tag="7" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Name="btn_id_8" Grid.Row="3" Grid.Column="3" Padding="0,0" Tag="8" ContextMenu="{StaticResource SlotButtonContextMenu}" Style="{StaticResource ButtonStyle}">
+                <i:Interaction.Behaviors>
+                    <ddb:DropDownButtonBehavior />
+                </i:Interaction.Behaviors>
+                <Button.Content>
+                    <Grid>
+                        <Image Source="graphics/coin_7.png" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">?</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </DockPanel>
 </Window>
