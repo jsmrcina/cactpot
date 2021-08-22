@@ -1,7 +1,4 @@
 using System;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace cactpot_gui
@@ -10,7 +7,7 @@ namespace cactpot_gui
     {
         public byte[] points = new byte[9];
 
-        private Dictionary<int, int> scoreToPayout = new Dictionary<int, int> {
+        private static readonly Dictionary<int, int> scoreToPayout = new Dictionary<int, int> {
            { 6, 10000 },
             { 7, 36 },
             { 8, 720 },
@@ -41,11 +38,6 @@ namespace cactpot_gui
             {
                 points[x] = 0;
             }
-        }
-
-        public BoardRepresentation(BoardRepresentation other)
-        {
-            AssignArray(other.points);
         }
 
         public BoardRepresentation(byte[] values)
@@ -92,26 +84,6 @@ namespace cactpot_gui
         private void AssignArray(byte[] values)
         {
             points = (byte[])values.Clone();
-        }
-
-        /*
-         * Converts a winning ID (integer) into the winning selection as a string
-        */
-        public static string ConvertWinningIdToString(int winningId)
-        {
-            switch (winningId)
-            {
-                case 0: return "First Row";
-                case 1: return "Second Row";
-                case 2: return "Third Row";
-                case 3: return "First Column";
-                case 4: return "Second Column";
-                case 5: return "Third Column";
-                case 6: return "Top Left Diagonal";
-                case 7: return "Top Right Diagonal";
-            }
-
-            throw new InvalidOperationException();
         }
 
         /*
@@ -184,28 +156,5 @@ namespace cactpot_gui
 
             return true;
         }
-
-        public override String ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-
-            builder.AppendLine($"Value: {EvaluateBestScoreAvailable()}");
-            for (int x = 0; x < 9; x++)
-            {
-                builder.Append(points[x]);
-
-                if ((x + 1) % 3 == 0)
-                {
-                    builder.AppendLine();
-                }
-                else if (x != 8)
-                {
-                    builder.Append(" ");
-                }
-            }
-
-            return builder.ToString();
-        }
-
     }
 }
